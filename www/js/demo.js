@@ -1,0 +1,52 @@
+$(function () {
+
+    $('#signOut').click(function () {
+        hoodie.account.signOut();
+    });
+
+    $('#signUpForm').submit(function (ev) {
+        ev.preventDefault();
+        hoodie.account.signUp(
+            $('#signUpUsername').val(),
+            $('#signUpPassword').val()
+        );
+        return false;
+    });
+
+    $('#signInForm').submit(function (ev) {
+        ev.preventDefault();
+        hoodie.account.signIn(
+            $('#signInUsername').val(),
+            $('#signInPassword').val()
+        );
+        return false;
+    });
+
+    $('#downloadBtn').click(function (ev) {
+        ev.preventDefault();
+        download( drawing('drawing.png') );
+        return false;
+    });
+
+    $('#shareBtn').click(function (ev) {
+        ev.preventDefault();
+        var recipient = prompt('Who would you like to send your drawing to?');
+        if (recipient) {
+            hoodie.email.send({
+                to: recipient,
+                //from: 'user@example.com' // automatically set when using gmail
+                subject: 'I drew a thing!',
+                body: 'Made with hoodie-drawing',
+                attachments: [
+                    drawing('drawing.png')
+                ]
+            }).fail(function (e) {
+                alert('Problem sending email: ' + e);
+            }).done(function () {
+                alert('Email sent!');
+            });
+        }
+        return false;
+    });
+
+});
