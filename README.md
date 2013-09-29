@@ -1,0 +1,9 @@
+- npm install
+- hoodie start
+- enter admin password
+- open Admin URL and edit email credentials in AppConfig
+- sign out
+- open WWW URL
+- create new user
+- draw something
+- try out download and share links
