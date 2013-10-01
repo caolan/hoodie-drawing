@@ -81,6 +81,7 @@ function drawRemotePath(doc) {
     p.hoodie_id = doc.id;
     paths.push(p);
 }
+
 hoodie.store.findAll('path').done(function (docs) {
     docs.forEach(drawRemotePath);
     view.draw();

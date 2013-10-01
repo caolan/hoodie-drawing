@@ -22,6 +22,12 @@ $(function () {
         return false;
     });
 
+    $('#clearBtn').click(function (ev) {
+        ev.preventDefault();
+        hoodie.store.removeAll('path');
+        return false;
+    });
+
     $('#downloadBtn').click(function (ev) {
         ev.preventDefault();
         download( drawing('drawing.png') );
