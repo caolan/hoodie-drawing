@@ -94,10 +94,26 @@ hoodie.store.on('add:path', function (doc) {
 });
 
 hoodie.store.on('remove:path', function (doc) {
+    var newpaths = [];
     for (var i = 0; i < paths.length; i++) {
         if (doc.id === paths[i].hoodie_id) {
             paths[i].remove();
         }
+        else {
+            newpaths.push(paths[i]);
+        }
     }
+    paths = newpaths;
     view.draw();
 });
+
+function clearLocal() {
+    for (var i = 0; i < paths.length; i++) {
+        paths[i].remove();
+    }
+    paths = [];
+    view.draw();
+}
+
+hoodie.account.on('signin', clearLocal);
+hoodie.account.on('signout', clearLocal);
