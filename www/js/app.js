@@ -30,6 +30,13 @@ $(function () {
     else {
         handleSignout();
     }
+
+    $('#clearBtn').click(function (ev) {
+        console.log('clear clicked');
+        hoodie.store.removeAll('path').done(function () {
+            console.log('paper cleared');
+        });
+    });
 });
 
 
