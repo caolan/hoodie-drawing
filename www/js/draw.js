@@ -1,4 +1,4 @@
-var currentArtist = window.currentArtist = hoodie.uuid();
+var clientId = window.clientId = hoodie.uuid();
 
 // The faster the user moves their mouse the larger the circle will be
 // We dont want it to be larger/smaller than this
@@ -25,7 +25,7 @@ function onMouseDown(event) {
     var color = randomColor();
     current_path = new Path();
     pathdoc = {
-        by: currentArtist,
+        by: clientId,
         start: event.point,
         color: color,
         route: []
@@ -47,7 +47,8 @@ function onMouseUp(event) {
     current_path.hoodie_id = hoodie.uuid();
     pathdoc.end = event.point;
     pathdoc.id = current_path.hoodie_id;
-    hoodie.store.add('path', pathdoc);
+    //hoodie.store.add('path', pathdoc);
+    window.onPathEnd(pathdoc);
     paths.push(current_path);
     pathdoc = null;
     current_path = null;
@@ -70,7 +71,7 @@ function endPath(path, point) {
 }
 
 
-function drawPath(doc) {
+window.drawPath = function drawPath(doc) {
     var p = new Path();
     p.by = doc.by;
     startPath(p, doc.start, doc.color);
@@ -80,9 +81,10 @@ function drawPath(doc) {
     endPath(p, doc.end);
     p.hoodie_id = doc.id;
     paths.push(p);
+    view.draw();
 };
 
-function clearPath(doc) {
+window.clearPath = function clearPath(doc) {
     var newpaths = [];
     for (var i = 0; i < paths.length; i++) {
         if (doc.id === paths[i].hoodie_id) {
@@ -168,8 +170,11 @@ hoodie.account.on('signout', clearLocal);
 
 
 
-
-
+/*
+// TODO: store.add('path', ...
+function onPathEnd(path) {
+    hoodie.store.add('path', path);
+}
 
 hoodie.store.findAll('path').done(function (docs) {
     docs.forEach(drawPath);
@@ -188,3 +193,8 @@ hoodie.store.on('remove:path', function (doc) {
 });
 
 
+*/
+
+window.view = view;
+
+demo();
