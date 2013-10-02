@@ -13,7 +13,7 @@ function demo() {
     // 2: persist
 
     // - add path to store onPathEnd
-    // - find all paths and for each drawPath
+    // - find all paths and for each drawPath when done
 
 
     // 3: realtime
