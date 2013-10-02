@@ -9,19 +9,6 @@ $(function () {
         return false;
     });
 
-    $('#signOut').click(function () {
-        hoodie.account.signOut();
-    });
-
-    $('#signInForm').submit(function (ev) {
-        ev.preventDefault();
-        hoodie.account.signIn(
-            $('#signInUsername').val(),
-            $('#signInPassword').val()
-        );
-        return false;
-    });
-
     $('#clearBtn').click(function (ev) {
         ev.preventDefault();
         hoodie.store.removeAll('path');
@@ -44,7 +31,7 @@ $(function () {
                 subject: 'I drew a thing!',
                 body: 'Made with hoodie-drawing',
                 attachments: [
-                    drawing('drawing.png')
+                    getDrawing('drawing.png')
                 ]
             });
         }

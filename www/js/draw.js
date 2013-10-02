@@ -104,8 +104,68 @@ function clearLocal() {
     view.draw();
 }
 
+hoodie.account.on('signin', function () {
+    hoodie.store.findAll('path').done(function (docs) {
+        docs.forEach(drawPath);
+        view.draw();
+    });
+});
+
 hoodie.account.on('signin', clearLocal);
 hoodie.account.on('signout', clearLocal);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

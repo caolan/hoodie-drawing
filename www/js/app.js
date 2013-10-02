@@ -47,7 +47,7 @@ function mimetype(path) {
     return 'image/' + extname(path);
 }
 
-function drawing(filename) {
+function getDrawing(filename) {
     var mime = mimetype(filename);
     var canvas = $('#draw')[0];
     return {
@@ -75,3 +75,22 @@ function download(data) {
         a.dispatchEvent(evt);
     }
 }
+
+
+$(function () {
+
+    $('#signOut').click(function () {
+        hoodie.account.signOut();
+    });
+
+    $('#signInForm').submit(function (ev) {
+        ev.preventDefault();
+        hoodie.account.signIn(
+            $('#signInUsername').val(),
+            $('#signInPassword').val()
+        );
+        return false;
+    });
+
+    // TODO: findAll paths on signin
+});
