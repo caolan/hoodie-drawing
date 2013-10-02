@@ -1,4 +1,4 @@
-var currentArtist = hoodie.uuid();
+var currentArtist = window.currentArtist = hoodie.uuid();
 
 // The faster the user moves their mouse the larger the circle will be
 // We dont want it to be larger/smaller than this
@@ -70,7 +70,7 @@ function endPath(path, point) {
 }
 
 
-function drawRemotePath(doc) {
+function drawPath(doc) {
     var p = new Path();
     p.by = doc.by;
     startPath(p, doc.start, doc.color);
@@ -80,21 +80,9 @@ function drawRemotePath(doc) {
     endPath(p, doc.end);
     p.hoodie_id = doc.id;
     paths.push(p);
-}
+};
 
-hoodie.store.findAll('path').done(function (docs) {
-    docs.forEach(drawRemotePath);
-    view.draw();
-});
-
-hoodie.store.on('add:path', function (doc) {
-    if (doc.by !== currentArtist) {
-        drawRemotePath(doc);
-    }
-    view.draw();
-});
-
-hoodie.store.on('remove:path', function (doc) {
+function clearPath(doc) {
     var newpaths = [];
     for (var i = 0; i < paths.length; i++) {
         if (doc.id === paths[i].hoodie_id) {
@@ -106,7 +94,7 @@ hoodie.store.on('remove:path', function (doc) {
     }
     paths = newpaths;
     view.draw();
-});
+};
 
 function clearLocal() {
     for (var i = 0; i < paths.length; i++) {
@@ -118,3 +106,25 @@ function clearLocal() {
 
 hoodie.account.on('signin', clearLocal);
 hoodie.account.on('signout', clearLocal);
+
+
+
+
+
+hoodie.store.findAll('path').done(function (docs) {
+    docs.forEach(drawPath);
+    view.draw();
+});
+
+hoodie.store.on('add:path', function (doc) {
+    if (doc.by !== currentArtist) {
+        drawPath(doc);
+    }
+    view.draw();
+});
+
+hoodie.store.on('remove:path', function (doc) {
+    clearPath(doc);
+});
+
+

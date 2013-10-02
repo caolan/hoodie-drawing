@@ -1,9 +1,5 @@
 $(function () {
 
-    $('#signOut').click(function () {
-        hoodie.account.signOut();
-    });
-
     $('#signUpForm').submit(function (ev) {
         ev.preventDefault();
         hoodie.account.signUp(
@@ -11,6 +7,10 @@ $(function () {
             $('#signUpPassword').val()
         );
         return false;
+    });
+
+    $('#signOut').click(function () {
+        hoodie.account.signOut();
     });
 
     $('#signInForm').submit(function (ev) {
@@ -46,10 +46,6 @@ $(function () {
                 attachments: [
                     drawing('drawing.png')
                 ]
-            }).fail(function (e) {
-                alert('Problem sending email: ' + e);
-            }).done(function () {
-                alert('Email sent!');
             });
         }
         return false;
