@@ -16,7 +16,7 @@ function demo() {
     // - find all paths and for each drawPath when done
 
 
-    // 3: realtime
+    // 3: synchronize
 
     // - on add path, drawPath if not by current clientId
 
