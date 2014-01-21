@@ -1,4 +1,4 @@
-var clientId = window.clientId = hoodie.uuid();
+var clientId = window.clientId = hoodie.generateId();
 
 // The faster the user moves their mouse the larger the circle will be
 // We dont want it to be larger/smaller than this
@@ -44,7 +44,7 @@ function onMouseDrag(event) {
 
 function onMouseUp(event) {
     endPath(current_path, event.point);
-    current_path.hoodie_id = hoodie.uuid();
+    current_path.hoodie_id = hoodie.generateId();
     pathdoc.end = event.point;
     pathdoc.id = current_path.hoodie_id;
     //hoodie.store.add('path', pathdoc);
