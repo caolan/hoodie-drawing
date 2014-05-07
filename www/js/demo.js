@@ -1,84 +1,39 @@
 function demo() {
 
-    // 1
+    // 1: signup
 
     $('#signUpForm').submit(function (ev) {
         ev.preventDefault();
         var username = $('#signUpUsername').val();
         var password = $('#signUpPassword').val();
-
-        hoodie.account.signUp(username, password);
+        // ...
     });
 
 
-    // 2
+    // 2: persist
 
-    onPathEnd = function (path) {
-        console.log('adding path');
-        hoodie.store.add('path', path).fail(function (err) {
-            console.log('fail');
-            console.log(err);
-        }).done(function () {
-            console.log('done');
-            console.log(arguments);
-        });
-    };
-
-    hoodie.store.findAll('path').done(function (docs) {
-        console.log('findAll path');
-        console.log(docs);
-        docs.forEach(drawPath);
-    });
+    // - add path to store onPathEnd
+    // - find all paths and for each drawPath when done
 
 
-    // 3
+    // 3: synchronize
 
-    hoodie.store.on('path:add', function (doc) {
-        console.log('path:add');
-        console.log(doc);
-        if (doc.by !== clientId) {
-            console.log('drawing Path');
-            drawPath(doc);
-        }
-    });
+    // - on add path, drawPath if not by current clientId
 
 
-    // 4
+    // 4: clear
 
-    $('#clearBtn').click(function (ev) {
-        console.log('removeAll path');
-        hoodie.store.removeAll('path');
-    });
-
-    hoodie.store.on('path:remove', function (doc) {
-        console.log('path:remove');
-        console.log(doc);
-        clearPath(doc);
-    });
+    // - on click clearBtn, remove all paths from store
+    // - on remove path, clearPath from drawing
 
 
-    // 5
+    // 5: download
 
-    $('#downloadBtn').click(function (ev) {
-        download( getDrawing('drawing.png') );
-    });
+    // - on click downloadBtn, getDrawing and download
 
 
-    // 6
+    // 6: share
 
-    $('#shareBtn').click(function (ev) {
-        var recipient = prompt('Who would you like to send your drawing to?');
-        if (recipient) {
-            hoodie.email.send({
-                to: recipient,
-                //from: 'user@example.com' // automatically set when using gmail
-                subject: 'I drew a thing!',
-                body: 'Made with hoodie-drawing',
-                attachments: [
-                    getDrawing('drawing.png')
-                ]
-            });
-        }
-    });
+    // - on click shareBtn, prompt for recipient and email.send
 
 }

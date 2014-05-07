@@ -14,10 +14,19 @@ function demo() {
     // 2
 
     onPathEnd = function (path) {
-        hoodie.store.add('path', path);
+        console.log('adding path');
+        hoodie.store.add('path', path).fail(function (err) {
+            console.log('fail');
+            console.log(err);
+        }).done(function () {
+            console.log('done');
+            console.log(arguments);
+        });
     };
 
     hoodie.store.findAll('path').done(function (docs) {
+        console.log('findAll path');
+        console.log(docs);
         docs.forEach(drawPath);
     });
 
@@ -25,7 +34,10 @@ function demo() {
     // 3
 
     hoodie.store.on('path:add', function (doc) {
+        console.log('path:add');
+        console.log(doc);
         if (doc.by !== clientId) {
+            console.log('drawing Path');
             drawPath(doc);
         }
     });
@@ -34,10 +46,13 @@ function demo() {
     // 4
 
     $('#clearBtn').click(function (ev) {
+        console.log('removeAll path');
         hoodie.store.removeAll('path');
     });
 
     hoodie.store.on('path:remove', function (doc) {
+        console.log('path:remove');
+        console.log(doc);
         clearPath(doc);
     });
 
