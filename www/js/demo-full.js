@@ -14,7 +14,7 @@ function demo() {
     // 2: persist
 
     // - add path to store onPathEnd
-    // - find all paths and for each drawPath when done (promises)
+    // - on page load, find all paths and for each drawPath when done()
 
     onPathEnd = function (path) {
         hoodie.store.add('path', path);
@@ -37,7 +37,7 @@ function demo() {
     // 4: clear
 
     // - on click clearBtn, remove all paths from store
-    // - on remove path, clearPath from drawing
+    // - on path remove, clearPath from drawing
 
     $('#clearBtn').click(function () {
         hoodie.store.removeAll('path');
@@ -52,7 +52,7 @@ function demo() {
     // - on click downloadBtn, getDrawing('drawing.png') and download
 
     $('#downloadBtn').click(function () {
-        download(getDrawing('drawing.png'));
+        download( getDrawing('drawing.png') );
     });
 
     // 6: share
@@ -65,7 +65,7 @@ function demo() {
             hoodie.email.send({
                 to: recipient,
                 subject: 'I drew a thing!',
-                body: 'Made with hoodie drawing',
+                body: 'made with hoodie drawing',
                 attachments: [
                     getDrawing('drawing.png')
                 ]

@@ -13,7 +13,7 @@ function demo() {
     // 2: persist
 
     // - add path to store onPathEnd
-    // - find all paths and for each drawPath when done (promises)
+    // - on page load, find all paths and for each drawPath when done()
 
 
     // 3: synchronize
@@ -24,7 +24,7 @@ function demo() {
     // 4: clear
 
     // - on click clearBtn, remove all paths from store
-    // - on remove path, clearPath from drawing
+    // - on path remove, clearPath from drawing
 
 
     // 5: download
@@ -35,6 +35,5 @@ function demo() {
     // 6: share
 
     // - on click shareBtn, prompt for recipient and email.send
-
 
 }
