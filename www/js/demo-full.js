@@ -1,79 +1,71 @@
 function demo() {
 
-    // 1
+    // 1: signup
 
     $('#signUpForm').submit(function (ev) {
         ev.preventDefault();
         var username = $('#signUpUsername').val();
         var password = $('#signUpPassword').val();
-
+        // ...
         hoodie.account.signUp(username, password);
     });
 
 
-    // 2
+    // 2: persist
+
+    // - add path to store onPathEnd
+    // - find all paths and for each drawPath when done (promises)
 
     onPathEnd = function (path) {
-        console.log('adding path');
-        hoodie.store.add('path', path).fail(function (err) {
-            console.log('fail');
-            console.log(err);
-        }).done(function () {
-            console.log('done');
-            console.log(arguments);
-        });
+        hoodie.store.add('path', path);
     };
 
-    hoodie.store.findAll('path').done(function (docs) {
-        console.log('findAll path');
-        console.log(docs);
-        docs.forEach(drawPath);
+    hoodie.store.findAll('path').done(function (paths) {
+        paths.forEach(drawPath);
     });
 
+    // 3: synchronize
 
-    // 3
+    // - on path add, drawPath if event is remote
 
-    hoodie.store.on('path:add', function (doc) {
-        console.log('path:add');
-        console.log(doc);
-        if (doc.by !== clientId) {
-            console.log('drawing Path');
-            drawPath(doc);
+    hoodie.store.on('path:add', function (path, options) {
+        if (options.remote) {
+            drawPath(path);
         }
     });
 
+    // 4: clear
 
-    // 4
+    // - on click clearBtn, remove all paths from store
+    // - on remove path, clearPath from drawing
 
-    $('#clearBtn').click(function (ev) {
-        console.log('removeAll path');
+    $('#clearBtn').click(function () {
         hoodie.store.removeAll('path');
     });
 
-    hoodie.store.on('path:remove', function (doc) {
-        console.log('path:remove');
-        console.log(doc);
-        clearPath(doc);
+    hoodie.store.on('path:remove', function (path) {
+        clearPath(path);
     });
 
+    // 5: download
 
-    // 5
+    // - on click downloadBtn, getDrawing('drawing.png') and download
 
-    $('#downloadBtn').click(function (ev) {
-        download( getDrawing('drawing.png') );
+    $('#downloadBtn').click(function () {
+        download(getDrawing('drawing.png'));
     });
 
+    // 6: share
 
-    // 6
+    // - on click shareBtn, prompt for recipient and email.send
 
-    $('#shareBtn').click(function (ev) {
+    $('#shareBtn').click(function () {
         var recipient = prompt('Who would you like to send your drawing to?');
         if (recipient) {
             hoodie.email.send({
                 to: recipient,
-                //from: 'user@example.com' // automatically set when using gmail
                 subject: 'I drew a thing!',
-                body: 'Made with hoodie-drawing',
+                body: 'Made with hoodie drawing',
                 attachments: [
                     getDrawing('drawing.png')
                 ]

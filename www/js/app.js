@@ -3,7 +3,7 @@ var hoodie = new Hoodie();
 // force an add event for paths added from other users
 hoodie.store.on('path:change', function (change, doc) {
     if (change === 'update' && doc._rev[0] === '1' && doc.by !== window.clientId) {
-        hoodie.store.trigger('path:add', doc);
+        hoodie.store.trigger('path:add', doc, {remote: true});
     }
 });
 

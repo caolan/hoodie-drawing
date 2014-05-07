@@ -13,12 +13,12 @@ function demo() {
     // 2: persist
 
     // - add path to store onPathEnd
-    // - find all paths and for each drawPath when done
+    // - find all paths and for each drawPath when done (promises)
 
 
     // 3: synchronize
 
-    // - on add path, drawPath if not by current clientId
+    // - on path add, drawPath if event is remote
 
 
     // 4: clear
@@ -29,11 +29,12 @@ function demo() {
 
     // 5: download
 
-    // - on click downloadBtn, getDrawing and download
+    // - on click downloadBtn, getDrawing('drawing.png') and download
 
 
     // 6: share
 
     // - on click shareBtn, prompt for recipient and email.send
+
 
 }
