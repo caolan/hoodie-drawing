@@ -1,0 +1,25 @@
+{
+  "name": "hoodie-drawing",
+  "version": "1.1.0",
+  "type": "app",
+  "dependencies": {
+    "hoodie-server": "0.9.24",
+    "hoodie-plugin-appconfig": "^0.2.0",
+    "hoodie-plugin-users": "^0.1.0",
+    "hoodie-plugin-email": "^0.1.4"
+  },
+  "engines": {
+    "node": ">=0.10.22"
+  },
+  "scripts": {
+    "start": "node node_modules/hoodie-server/bin/start"
+  },
+  "hoodie": {
+    "hoodiejs": "./hoodie",
+    "plugins": [
+      "hoodie-plugin-appconfig",
+      "hoodie-plugin-users",
+      "hoodie-plugin-email"
+    ]
+  }
+}
